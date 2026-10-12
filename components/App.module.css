@@ -1,0 +1,176 @@
+/* Mandi Calendar app styles, ported from the v1.0 prototype (app_template.html).
+   Everything is scoped under .root so the showcase page never inherits it. */
+/* ---------- app root (the dawn glow sits here, not on body, so /showcase keeps its own) ---------- */
+.root{min-height:100vh;background-image:radial-gradient(900px 360px at 82% -140px,var(--dawn),transparent 70%);background-repeat:no-repeat}
+/* ---------- header ---------- */
+.root :global .bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.root :global .bar-in{max-width:1100px;margin:0 auto;padding:14px 24px;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:12px}
+.root :global .tools{display:flex;gap:6px}
+.root :global .mark{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.015em;white-space:nowrap;font-variation-settings:"opsz" 36;color:inherit;text-decoration:none}
+.root :global .mark i{width:10px;height:10px;border-radius:50%;background:var(--haldi);box-shadow:0 0 0 4px color-mix(in srgb,var(--haldi) 24%,transparent);flex:none}
+.root :global .months{position:relative;display:flex;gap:2px;justify-content:center;overflow-x:auto;scrollbar-width:none}
+.root :global .months::-webkit-scrollbar{display:none}
+.root :global .months button{flex:none;position:relative;background:none;border:1px solid transparent;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.root :global .months button:hover{color:var(--ink);background:var(--line)}
+.root :global .months button.is-now{border-color:var(--haldi);color:var(--ink)}
+.root :global .months button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.root :global .sel{position:relative;display:block}
+.root :global .sel select{-webkit-appearance:none;appearance:none;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 34px 8px 15px;font-size:14px;font-weight:500;min-width:180px;cursor:pointer;width:100%}
+.root :global .sel select:hover{border-color:color-mix(in srgb,var(--ink) 40%,transparent)}
+.root :global .sel svg{position:absolute;right:13px;top:50%;width:10px;height:10px;margin-top:-5px;pointer-events:none;fill:none;stroke:var(--muted);stroke-width:1.6}
+.root :global .info{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-family:var(--display);font-weight:600;font-size:16px;cursor:pointer;display:grid;place-items:center;padding:0;flex:none}
+.root :global .info:hover{border-color:var(--ink)}
+.root :global .info svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.root :global .theme .moon{display:none}
+:root[data-theme="dark"] .root :global .theme .sun{display:none}
+:root[data-theme="dark"] .root :global .theme .moon{display:block}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) .root :global .theme .sun{display:none}
+:root:not([data-theme="light"]) .root :global .theme .moon{display:block}
+}
+/* ---------- main ---------- */
+.root :global .wrap{max-width:1100px;margin:0 auto;padding:0 24px 64px}
+.root :global .lede{padding:44px 0 26px}
+.root :global .kicker{margin:0 0 14px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.root :global .kicker::before{content:"";width:22px;height:1px;background:currentColor}
+.root :global .lede h1{margin:0;font-family:var(--display);font-weight:340;font-size:68px;line-height:.94;letter-spacing:-.035em;font-variation-settings:"opsz" 144}
+.root :global .lede h1 span{display:block}
+.root :global .lede h1 em{display:block;font-style:italic;font-weight:300;color:var(--accent);transition:color .3s}
+.root :global .lede p.sub{margin:16px 0 0;font-size:15px;color:var(--muted)}
+.root :global .lede p.sub b{color:var(--ink);font-weight:600}
+.root :global .tabs{display:flex;border-bottom:1px solid var(--line);margin:0 0 28px}
+.root :global .tabs button{--tc:var(--leaf);display:flex;align-items:center;gap:9px;background:none;border:0;border-bottom:2px solid transparent;margin:0 26px -1px 0;padding:12px 2px 12px 0;cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;transition:color .2s,border-color .2s}
+.root :global .tabs .t-ending{--tc:var(--terra)}
+.root :global .tabs .t-next{--tc:var(--indigo)}
+.root :global .tabs .t-around{--tc:var(--stone)}
+.root :global .tabs button .g{color:var(--tc);order:0}
+.root :global .tabs button .tl{order:1}
+.root :global .tabs button b{order:2;font-family:var(--display);font-weight:400;font-size:21px;line-height:1;color:var(--muted);font-variant-numeric:tabular-nums;font-variation-settings:"opsz" 48}
+.root :global .tabs button:hover{color:var(--ink)}
+.root :global .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--tc)}
+.root :global .tabs button[aria-selected="true"] b{color:var(--tc)}
+.root :global .tabs .t-around[aria-selected="true"] b{color:var(--ink)}
+.root :global .intro{font-size:15px;color:var(--muted);margin:0 0 18px;max-width:60ch}
+.root :global .empty{font-family:var(--display);font-style:italic;font-size:22px;color:var(--muted);margin:48px 0;text-align:center;max-width:none}
+.root :global .group{margin:0 0 34px}
+.root :global .group-head{display:flex;align-items:baseline;gap:12px;margin:0 0 14px}
+.root :global .group-head h2{margin:0;font-family:var(--display);font-style:italic;font-weight:400;font-size:24px;letter-spacing:-.01em}
+.root :global .group-head span{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.root :global .group-head::after{content:"";flex:1;height:1px;background:var(--line);align-self:center}
+.root :global .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.root :global .card{--sc:var(--leaf);position:relative;display:flex;flex-direction:column;text-align:left;padding:0;color:inherit;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;
+  transition:transform .25s cubic-bezier(.2,.7,.2,1),border-color .2s,box-shadow .25s;animation:rise .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0ms)}
+.root :global .card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--sc) 55%,var(--line));box-shadow:0 16px 30px -20px var(--shadow)}
+.root :global .card .art{position:relative;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--a) 13%,var(--card))}
+.root :global .card .art svg{width:56%;height:56%;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.root :global .card:hover .art svg{transform:scale(1.07) rotate(-3deg)}
+.root :global .chip{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:6px;padding:4px 9px 4px 7px;border-radius:999px;background:var(--glass);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--sc);line-height:1.2}
+.root :global .cb{display:flex;flex-direction:column;gap:2px;padding:12px 14px 14px;flex:1}
+.root :global .nm{font-family:var(--display);font-weight:600;font-size:18px;line-height:1.15;letter-spacing:-.01em;font-variation-settings:"opsz" 30}
+.root :global .hi{font-size:13px;color:var(--muted);line-height:1.4}
+.root :global .hi [lang="hi"]{font-family:var(--hi);font-size:15px;color:var(--ink)}
+.root :global .from{font-size:12.5px;color:var(--muted);line-height:1.35;margin-top:3px}
+.root :global .yr{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;margin-top:auto;padding-top:11px}
+.root :global .yr i{height:5px;border-radius:2px;background:var(--line)}
+.root :global .yr i.on{background:var(--sc)}
+.root :global .yr i.sel{box-shadow:0 0 0 1.5px var(--card),0 0 0 2.6px var(--ink)}
+.root :global .card .yr{opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
+.root :global .card:hover .yr,.root :global .card:focus-visible .yr{opacity:1;transform:none}
+.root :global .card.st-last{border-color:color-mix(in srgb,var(--terra) 65%,transparent)}
+.root :global .card.st-last .art svg{filter:saturate(.55)}
+.root :global .card.st-away{background:transparent;border-style:dashed;border-color:color-mix(in srgb,var(--stone) 70%,transparent)}
+.root :global .card.st-away .art{background:color-mix(in srgb,var(--stone) 10%,transparent)}
+.root :global .card.st-away .art svg{filter:saturate(.45);opacity:.9}
+.root :global .card.st-away .nm{text-decoration:line-through;text-decoration-color:var(--stone);text-decoration-thickness:1.5px;color:color-mix(in srgb,var(--ink) 70%,var(--stone))}
+/* ---------- recipe view ---------- */
+.root :global .back{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;margin:26px 0 0;padding:8px 14px 8px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;min-height:40px}
+.root :global .back:hover{border-color:var(--ink)}
+.root :global .back svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8}
+.root :global .rlay{display:grid;grid-template-columns:330px 1fr;gap:52px;align-items:start;margin-top:26px}
+.root :global .rside{position:sticky;top:96px}
+.root :global .rhero{aspect-ratio:1;border-radius:24px;display:grid;place-items:center;background:color-mix(in srgb,var(--a) 15%,var(--card));border:1px solid var(--line);animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+.root :global .rhero svg{width:62%;height:62%}
+.root :global .rtitle{margin:22px 0 4px;font-family:var(--display);font-weight:400;font-size:48px;line-height:1;letter-spacing:-.03em;font-variation-settings:"opsz" 144}
+.root :global .rhi{margin:0}
+.root :global .rhi .hi{font-size:15px}
+.root :global .rhi .hi [lang="hi"]{font-size:19px}
+.root :global .rline{display:flex;align-items:flex-start;gap:9px;margin:16px 0 0;font-size:14.5px;font-weight:500;line-height:1.4}
+.root :global .rline .g{color:var(--sc);margin-top:5px}
+.root :global .ybig{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:18px}
+.root :global .ybig i{position:relative;display:grid;place-items:center;height:30px;border-radius:6px;background:color-mix(in srgb,var(--ink) 5%,transparent);font-style:normal;font-size:11px;font-weight:700;color:var(--muted)}
+.root :global .ybig i.on{background:var(--sc);color:var(--paper)}
+.root :global .ybig i.sel{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--ink)}
+.root :global .ybig i.now::after{content:"";position:absolute;bottom:-8px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--haldi)}
+.root :global .ycap{margin:16px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45}
+.root :global .rsec{margin:0 0 30px}
+.root :global .rsec-head{display:flex;align-items:baseline;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--ink)}
+.root :global .rsec-head h2{margin:0;font-family:var(--display);font-style:italic;font-weight:400;font-size:24px;letter-spacing:-.01em}
+.root :global .rsec-head span{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--muted)}
+.root :global a.rrow{display:flex;align-items:center;gap:16px;padding:14px 2px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;transition:padding .2s,background-color .2s}
+.root :global a.rrow:hover{padding-left:10px;background:color-mix(in srgb,var(--haldi) 7%,transparent)}
+.root :global .rt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.root :global .rn{font-family:var(--display);font-weight:500;font-size:18px;line-height:1.25;font-variation-settings:"opsz" 30}
+.root :global .rd{font-size:13.5px;color:var(--muted);line-height:1.4}
+.root :global .ra{flex:none;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper);display:grid;place-items:center;transition:background-color .2s,transform .2s}
+.root :global .ra svg{width:11px;height:11px;margin-left:2px;fill:currentColor}
+.root :global a.rrow:hover .ra{background:var(--haldi);color:#1D1A15;transform:scale(1.08)}
+.root :global .rempty{margin:14px 0 0;padding:13px 16px;font-size:14px;color:var(--muted);border-left:3px solid var(--haldi);background:color-mix(in srgb,var(--haldi) 7%,transparent);border-radius:0 10px 10px 0}
+.root :global .rnote{margin:8px 0 0;font-size:13px;color:var(--muted)}
+/* ---------- legend sheet ---------- */
+.root :global .overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(20,18,14,.42);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);animation:fade .2s both}
+.root :global .sheet{position:relative;width:100%;max-width:440px;max-height:86vh;overflow-y:auto;padding:26px 24px 22px;border-radius:22px;background:var(--glass);-webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);border:1px solid var(--line);box-shadow:0 30px 60px -20px var(--shadow);animation:rise .3s cubic-bezier(.2,.7,.2,1) both}
+.root :global .sheet h2{margin:0;padding-right:44px;font-family:var(--display);font-weight:400;font-size:30px;letter-spacing:-.02em}
+.root :global .close{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer;display:grid;place-items:center;padding:0}
+.root :global .close svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.8}
+.root :global .close:hover{border-color:var(--ink)}
+.root :global .lrow{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+.root :global .lrow .g{width:16px;height:16px;margin-top:3px;color:var(--sc)}
+.root :global .lrow b{display:block;font-family:var(--display);font-weight:600;font-size:17px}
+.root :global .lrow span{font-size:14px;color:var(--muted)}
+.root :global .foot-note{margin:14px 0 0;font-size:13px;color:var(--muted)}
+/* ---------- phone layout ---------- */
+@media (max-width:640px){
+.root :global .bar-in{grid-template-columns:auto minmax(0,1fr) auto;padding:10px 16px 8px;gap:10px}
+.root :global .sel select{text-overflow:ellipsis}
+.root :global .mark{font-size:17px;gap:8px}
+.root :global .sel select{min-width:0;font-size:14px;padding:8px 30px 8px 13px;min-height:44px}
+.root :global .info,.root :global .close{width:44px;height:44px}
+.root :global .info svg{width:18px;height:18px}
+.root :global .mark{min-height:44px}
+.root :global .months{order:5;grid-column:1/-1;justify-content:flex-start;margin:0 -16px;padding:0 16px 2px;scroll-padding:0 16px}
+.root :global .months{padding-top:6px;padding-bottom:6px}
+.root :global .months button{padding:7px 11px;font-size:11.5px}
+.root :global .months button::before{content:"";position:absolute;inset:-6px 0}
+.root :global .wrap{padding:0 16px calc(98px + env(safe-area-inset-bottom,0px))}
+.root :global .lede{padding:24px 0 18px}
+.root :global .kicker{margin-bottom:10px;font-size:10.5px}
+.root :global .lede h1{font-size:44px}
+.root :global .lede p.sub{margin-top:10px;font-size:14px}
+.root :global .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:0;padding:6px 8px calc(16px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--paper) 90%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);border-bottom:0}
+.root :global .tabs button{position:relative;display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;column-gap:5px;row-gap:3px;margin:0;padding:9px 2px 7px;border:0;border-radius:12px;font-size:11px;font-weight:600;letter-spacing:.01em}
+.root :global .tabs button b{order:0;font-size:20px}
+.root :global .tabs button .tl{grid-column:1/-1;order:2;text-align:center;white-space:nowrap}
+.root :global .tabs button[aria-selected="true"]{background:color-mix(in srgb,var(--tc) 9%,transparent)}
+.root :global .tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:32%;right:32%;height:2px;border-radius:2px;background:var(--tc)}
+.root :global .intro{font-size:14px;margin-bottom:14px}
+.root :global .group{margin-bottom:26px}
+.root :global .group-head h2{font-size:21px}
+.root :global .grid{grid-template-columns:1fr 1fr;gap:10px}
+.root :global .card{border-radius:14px}
+.root :global .chip{left:8px;top:8px;font-size:9.5px;padding:3px 8px 3px 6px;gap:5px}
+.root :global .cb{padding:10px 11px 12px}
+.root :global .nm{font-size:16px}
+.root :global .hi{font-size:12px}
+.root :global .hi [lang="hi"]{font-size:14px}
+.root :global .from{font-size:12px}
+.root :global .card .yr{opacity:1;transform:none;padding-top:9px}
+.root :global .back{margin-top:18px;min-height:44px}
+.root :global .rlay{grid-template-columns:1fr;gap:22px;margin-top:18px}
+.root :global .rside{position:static}
+.root :global .rhero{aspect-ratio:16/10;border-radius:20px}
+.root :global .rhero svg{width:44%;height:auto;max-height:70%}
+.root :global .rtitle{font-size:44px;margin-top:18px}
+.root :global .ybig i{height:26px;font-size:10px}
+.root :global .rsec-head h2{font-size:21px}
+.root :global .rn{font-size:16.5px}
+}
