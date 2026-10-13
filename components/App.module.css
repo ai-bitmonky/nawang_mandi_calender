@@ -128,8 +128,8 @@
 .root :global .lrow b{display:block;font-family:var(--display);font-weight:600;font-size:17px}
 .root :global .lrow span{font-size:14px;color:var(--muted)}
 .root :global .foot-note{margin:14px 0 0;font-size:13px;color:var(--muted)}
-/* ---------- phone layout ---------- */
-@media (max-width:640px){
+/* ---------- mobile layout: phones and portrait tablets (<=900px) ---------- */
+@media (max-width:900px){
 .root :global .bar-in{grid-template-columns:auto minmax(0,1fr) auto;padding:10px 16px 8px;gap:10px}
 .root :global .sel select{text-overflow:ellipsis}
 .root :global .mark{font-size:17px;gap:8px}
@@ -173,4 +173,15 @@
 .root :global .ybig i{height:26px;font-size:10px}
 .root :global .rsec-head h2{font-size:21px}
 .root :global .rn{font-size:16.5px}
+}
+/* wider mobiles / portrait tablets: three columns */
+@media (min-width:600px) and (max-width:900px){
+.root :global .grid{grid-template-columns:repeat(3,1fr);gap:12px}
+.root :global .wrap{padding-left:24px;padding-right:24px}
+.root :global .bar-in{padding-left:24px;padding-right:24px}
+.root :global .months{margin:0 -24px;padding-left:24px;padding-right:24px}
+}
+/* touch screens with the desktop layout: keep the 12-month strip visible */
+@media (hover:none) and (min-width:901px){
+.root :global .card .yr{opacity:1;transform:none;padding-top:9px}
 }
