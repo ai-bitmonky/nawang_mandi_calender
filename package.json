@@ -6,10 +6,12 @@
   "engines": { "node": ">=20" },
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/gen-icons.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "gen-data": "node scripts/gen-data.mjs"
+    "gen-data": "node scripts/gen-data.mjs",
+    "gen-icons": "node scripts/gen-icons.mjs"
   },
   "dependencies": {
     "next": "15.5.27",
@@ -23,6 +25,7 @@
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "15.5.27",
+    "sharp": "^0.35.5",
     "typescript": "5.9.3"
   }
 }

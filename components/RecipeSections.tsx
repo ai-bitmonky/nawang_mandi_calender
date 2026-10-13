@@ -13,19 +13,21 @@ function Section({ title, rows, emptyText }: { title: string; rows: ReadonlyArra
       {!rows.length ? (
         <p className="rempty">{emptyText}</p>
       ) : (
-        rows.map(([name, desc]) => (
-          <a key={name} className="rrow" href={yt(name)} target="_blank" rel="noopener noreferrer" aria-label={name + ": " + desc + ". Opens YouTube."}>
-            <span className="rt">
-              <span className="rn">{name}</span>
-              <span className="rd">{desc}</span>
-            </span>
-            <span className="ra" aria-hidden="true">
-              <svg viewBox="0 0 10 10">
-                <path d="M1 0l9 5-9 5z" />
-              </svg>
-            </span>
-          </a>
-        ))
+        <div className="rlist">
+          {rows.map(([name, desc]) => (
+            <a key={name} className="rrow" href={yt(name)} target="_blank" rel="noopener noreferrer" aria-label={name + ": " + desc + ". Opens YouTube."}>
+              <span className="rt">
+                <span className="rn">{name}</span>
+                <span className="rd">{desc}</span>
+              </span>
+              <span className="ra" aria-hidden="true">
+                <svg viewBox="0 0 10 10">
+                  <path d="M1 0l9 5-9 5z" />
+                </svg>
+              </span>
+            </a>
+          ))}
+        </div>
       )}
     </section>
   );

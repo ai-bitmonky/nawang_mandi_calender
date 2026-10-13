@@ -30,7 +30,8 @@
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+a,button,input,select,label,summary{touch-action:manipulation}
 body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font:15px/1.5 var(--ui);-webkit-font-smoothing:antialiased;;transition:background-color .3s,color .3s}
 button,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 5px color-mix(in srgb,var(--haldi) 55%,transparent)}
@@ -49,6 +50,25 @@ svg{--lf:#5C9A4E;--st:#8A9B7A}
 @keyframes fade{from{opacity:0}}
 @keyframes swap{from{opacity:0;transform:translateY(.12em)}to{opacity:1;transform:none}}
 @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}}
+
+/* phone screen transitions (View Transitions API; only started on phones, see lib/nav.ts).
+   The bars stay put; only the screen (view-transition-name: mscreen) slides. */
+@keyframes vt-in-right{from{transform:translateX(100%)}}
+@keyframes vt-out-left{to{transform:translateX(-28%);opacity:.55}}
+@keyframes vt-out-right{to{transform:translateX(100%)}}
+@keyframes vt-in-left{from{transform:translateX(-28%);opacity:.55}}
+@keyframes vt-fade-in{from{opacity:0}}
+@keyframes vt-fade-out{to{opacity:0}}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.2s}
+::view-transition-group(mbar),::view-transition-group(mtabs){animation-duration:.24s}
+html[data-nav="push"]::view-transition-old(mscreen){animation:vt-out-left .28s cubic-bezier(.2,.8,.2,1) both}
+html[data-nav="push"]::view-transition-new(mscreen){animation:vt-in-right .28s cubic-bezier(.2,.8,.2,1) both;box-shadow:-12px 0 30px -10px rgba(0,0,0,.25)}
+html[data-nav="pop"]::view-transition-old(mscreen){animation:vt-out-right .28s cubic-bezier(.2,.8,.2,1) both;z-index:1;box-shadow:-12px 0 30px -10px rgba(0,0,0,.25)}
+html[data-nav="pop"]::view-transition-new(mscreen){animation:vt-in-left .28s cubic-bezier(.2,.8,.2,1) both}
+html[data-nav="tab"]::view-transition-old(mscreen){animation:vt-fade-out .15s ease both}
+html[data-nav="tab"]::view-transition-new(mscreen){animation:vt-fade-in .15s ease both}
+html[data-nav="fade"]::view-transition-old(*){animation:vt-fade-out .12s ease both}
+html[data-nav="fade"]::view-transition-new(*){animation:vt-fade-in .12s ease both}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}

@@ -72,6 +72,7 @@ export default function MainView() {
           <span>{T.h[0]}</span>
           <em>{T.h[1]}</em>
         </h1>
+        <span className="lt-end" aria-hidden="true" />
         <p className="sub">
           {tab === "now" && !here.length ? (
             "Between seasons in " + city + " this month."

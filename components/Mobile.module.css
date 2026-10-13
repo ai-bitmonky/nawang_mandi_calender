@@ -1,0 +1,226 @@
+/* Mandi Calendar — native-feel phone layout (phones and portrait tablets, <=900px).
+   Sits on the same element as App.module.css .root. Every rule is prefixed with `html .app` so it
+   always beats the desktop rules, whatever order the two files load in. Desktop (>900px) only gets
+   the hide rules at the very end. */
+
+/* ---------- sheets + install hint: only ever rendered on phones, so not media-gated ---------- */
+html .app :global .msheet{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;justify-content:flex-end}
+html .app :global .msheet-scrim{position:absolute;inset:0;background:rgba(20,18,14,.42);animation:fade .26s ease both}
+html .app :global .msheet-panel{position:relative;display:flex;flex-direction:column;max-height:calc(100% - 40px - env(safe-area-inset-top,0px));width:100%;max-width:640px;margin:0 auto;
+  background:var(--paper);border-radius:22px 22px 0 0;box-shadow:0 -18px 50px -20px var(--shadow),0 0 0 1px var(--line);outline:none;
+  padding-bottom:env(safe-area-inset-bottom,0px);animation:sheetUp .26s cubic-bezier(.2,.8,.2,1) backwards;will-change:transform}
+html .app :global .msheet-head{position:relative;flex:none;display:flex;align-items:center;gap:12px;padding:20px 16px 10px;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+html .app :global .msheet-grab{position:absolute;top:7px;left:50%;width:38px;height:5px;margin-left:-19px;border-radius:3px;background:color-mix(in srgb,var(--ink) 22%,transparent)}
+html .app :global .msheet-head h2{flex:1;margin:0;font-family:var(--display);font-weight:500;font-size:22px;line-height:1.2;letter-spacing:-.015em;font-variation-settings:"opsz" 48}
+html .app :global .msheet-done{min-height:44px;min-width:44px;padding:0 6px;border:0;background:none;color:var(--accent);font-size:16px;font-weight:600;cursor:pointer}
+html .app :global .msheet-top{flex:none;padding:0 16px 10px}
+html .app :global .msheet-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 16px 16px}
+html .app :global .msheet-body::-webkit-scrollbar{display:none}
+html .app :global .msheet-foot{flex:none;padding:12px 16px 14px;border-top:1px solid var(--line)}
+@keyframes sheetUp{from{transform:translateY(100%)}}
+
+/* state sheet */
+html .app :global .ms-search{position:relative;display:flex;align-items:center}
+html .app :global .ms-search svg{position:absolute;left:12px;width:17px;height:17px;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linecap:round;pointer-events:none}
+html .app :global .ms-search input{width:100%;height:42px;padding:0 12px 0 38px;border-radius:12px;border:0;background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink);font:16px/1.3 var(--ui);-webkit-appearance:none;appearance:none}
+html .app :global .ms-search input::placeholder{color:var(--muted)}
+html .app :global .ms-search input:focus-visible{outline:2px solid var(--accent);outline-offset:0;box-shadow:none}
+html .app :global .ms-gh{position:sticky;top:0;z-index:1;margin:0;padding:14px 4px 6px;background:var(--paper);font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+html .app :global .ms-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+html .app :global .ms-row{position:relative;display:flex;align-items:center;width:100%;min-height:48px;padding:0 14px 0 16px;border:0;background:none;text-align:left;font-size:16.5px;font-weight:500;cursor:pointer;-webkit-user-select:none;user-select:none;transition:background-color .12s}
+html .app :global .ms-row:not(:last-child)::after{content:"";position:absolute;left:16px;right:0;bottom:0;height:1px;background:var(--line)}
+html .app :global .ms-row:active{background:color-mix(in srgb,var(--ink) 7%,transparent)}
+html .app :global .ms-row span{flex:1}
+html .app :global .ms-row[aria-current]{color:var(--accent);font-weight:600}
+html .app :global .ms-row svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+html .app :global .ms-none{margin:28px 4px;font-size:15px;color:var(--muted);text-align:center}
+
+/* legend sheet */
+html .app :global .ml-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 16px}
+html .app :global .ml-card .lrow{padding:14px 0}
+html .app :global .ml-card .lrow:last-child{border-bottom:0}
+html .app :global .ml-card .lrow b{font-size:17px}
+html .app :global .ml-card .lrow span{font-size:15px;line-height:1.4}
+html .app :global .ml-note{margin:12px 4px 0;font-size:13px;line-height:1.45;color:var(--muted)}
+html .app :global .appear{display:flex;align-items:center;justify-content:space-between;gap:12px}
+html .app :global .appear>span{font-size:15px;font-weight:600}
+html .app :global .seg{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;padding:2px;border-radius:10px;background:color-mix(in srgb,var(--ink) 8%,transparent)}
+html .app :global .seg button{min-width:64px;min-height:34px;padding:0 10px;border:0;border-radius:8px;background:none;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;-webkit-user-select:none;user-select:none;transition:background-color .15s,color .15s}
+html .app :global .seg button[aria-checked="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12),0 0 0 .5px var(--line)}
+
+/* add-to-home-screen hint */
+html .app :global .a2hs{position:absolute;left:12px;right:12px;bottom:calc(var(--tab-h) + 10px);z-index:31;display:flex;align-items:center;gap:10px;padding:10px 8px 10px 14px;border-radius:16px;
+  background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--line);box-shadow:0 12px 30px -16px var(--shadow);animation:a2hsIn .3s cubic-bezier(.2,.8,.2,1) both}
+html .app :global .a2hs i{flex:none;width:30px;height:30px;border-radius:8px;background:var(--paper);display:grid;place-items:center;box-shadow:0 0 0 1px var(--line)}
+html .app :global .a2hs i::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--haldi);box-shadow:0 0 0 3px color-mix(in srgb,var(--haldi) 25%,transparent)}
+html .app :global .a2hs p{flex:1;margin:0;font-size:13px;line-height:1.35;color:var(--muted)}
+html .app :global .a2hs p b{display:block;color:var(--ink);font-size:14px;font-weight:600}
+html .app :global .a2hs .a2hs-go{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:0;background:var(--ink);color:var(--paper);font-size:14px;font-weight:600;cursor:pointer}
+html .app :global .a2hs .a2hs-x{flex:none;width:36px;height:36px;border:0;background:none;color:var(--muted);display:grid;place-items:center;cursor:pointer;position:relative}
+html .app :global .a2hs .a2hs-x::before{content:"";position:absolute;inset:-4px}
+html .app :global .a2hs .a2hs-x svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.8}
+@keyframes a2hsIn{from{opacity:0;transform:translateY(12px)}}
+
+/* ---------- the phone shell ---------- */
+@media (max-width:900px){
+:global(html):has(.app),:global(html):has(.app) :global(body){height:100%;overflow:hidden;overscroll-behavior:none}
+html .app{--gut:16px;--st:env(safe-area-inset-top,0px);--sb:env(safe-area-inset-bottom,0px);--row:52px;--strip:44px;--tab-h:calc(56px + var(--sb));--bar-h:calc(var(--st) + var(--row) + var(--strip));
+  position:relative;height:100vh;height:100dvh;min-height:0;overflow:hidden;background-image:none;font-size:16px;line-height:1.4}
+html .app[data-screen="item"]{--bar-h:calc(var(--st) + var(--row))}
+html .app :global .mshell{height:100%}
+html .app :global .bar{display:none}
+html .app :global button,html .app :global .card,html .app :global .mbar,html .app :global .mtabs{-webkit-user-select:none;user-select:none}
+
+/* one scrolling screen between the bars */
+html .app :global .scroller{position:absolute;inset:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;scrollbar-width:none;
+  padding-top:var(--bar-h);padding-bottom:calc(var(--tab-h) + 12px);view-transition-name:mscreen;
+  background:var(--paper) radial-gradient(700px 300px at 85% -60px,var(--dawn),transparent 70%) no-repeat;background-attachment:local}
+html .app :global .scroller::-webkit-scrollbar{display:none}
+html .app :global .scroller[data-swiping]{box-shadow:-12px 0 30px -8px var(--shadow)}
+html .app :global .scroller[data-enter="push"]>main{animation:inRight .28s cubic-bezier(.2,.8,.2,1) both}
+html .app :global .scroller[data-enter="pop"]>main{animation:inLeft .28s cubic-bezier(.2,.8,.2,1) both}
+html .app :global .scroller[data-enter="tab"]>main,html .app :global .scroller[data-enter="fade"]>main{animation:fade .14s ease both}
+html .app :global .lt-top{display:block;height:1px;margin-bottom:-1px}
+html .app :global .lt-end{display:block;height:1px;margin-top:-1px;pointer-events:none}
+
+/* ---------- top bar ---------- */
+html .app :global .mbar{display:block;position:absolute;top:0;left:0;right:0;z-index:20;view-transition-name:mbar;padding-top:var(--st);border-bottom:1px solid transparent;background:transparent;
+  transition:background-color .2s,border-color .2s,-webkit-backdrop-filter .2s,backdrop-filter .2s}
+html .app[data-scrolled] :global .mbar{background:color-mix(in srgb,var(--paper) 78%,transparent);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border-bottom-color:var(--line)}
+html .app :global .mrow{height:var(--row);display:flex;align-items:center;gap:8px;padding:0 var(--gut)}
+html .app :global .mrow.is-item{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px}
+html .app :global .mmark{flex:none;display:flex;align-items:center;gap:8px;min-height:44px;color:inherit;text-decoration:none;font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:-.015em;font-variation-settings:"opsz" 36}
+html .app :global .mmark i{width:10px;height:10px;border-radius:50%;background:var(--haldi);box-shadow:0 0 0 4px color-mix(in srgb,var(--haldi) 24%,transparent);flex:none;margin-left:3px}
+html .app :global .mmark span{display:block;max-width:90px;overflow:hidden;white-space:nowrap;transition:opacity .2s,max-width .25s cubic-bezier(.2,.8,.2,1)}
+html .app[data-collapsed] :global .mmark span{opacity:0;max-width:0}
+html .app :global .mtitle{flex:1;min-width:0;text-align:center;font-size:16px;font-weight:600;letter-spacing:-.005em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(6px);transition:opacity .2s,transform .25s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+html .app[data-collapsed] :global .mtitle{opacity:1;transform:none}
+html .app :global .is-item .mtitle{max-width:min(52vw,320px)}
+html .app :global .mact{flex:none;display:flex;align-items:center;gap:6px;margin-left:auto}
+html .app :global .mpill{position:relative;display:inline-flex;align-items:center;gap:7px;height:36px;max-width:156px;padding:0 12px 0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:15px;font-weight:600;cursor:pointer;transition:transform .12s,background-color .12s}
+html .app :global .mpill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html .app :global .mpill svg{flex:none;width:10px;height:10px;fill:none;stroke:var(--muted);stroke-width:1.7}
+html .app :global .mbtn{position:relative;flex:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-family:var(--display);font-weight:600;font-size:17px;padding:0;cursor:pointer;display:grid;place-items:center;transition:transform .12s}
+html .app :global .mpill::before,html .app :global .mbtn::before{content:"";position:absolute;inset:-4px}
+html .app :global .mpill:active,html .app :global .mbtn:active{transform:scale(.94)}
+html .app :global .mback{position:relative;justify-self:start;display:inline-flex;align-items:center;gap:6px;min-height:44px;min-width:44px;margin-left:-6px;padding:0 6px;color:var(--accent);text-decoration:none;font-size:16.5px;font-weight:500;white-space:nowrap;max-width:100%}
+html .app :global .mback span{overflow:hidden;text-overflow:ellipsis}
+html .app :global .mback svg{flex:none;width:12px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+html .app :global .mback:active{opacity:.5}
+
+/* month strip: horizontal snap scroller under the bar */
+html .app :global .mbar .months{order:0;height:var(--strip);display:flex;align-items:center;justify-content:flex-start;gap:4px;margin:0;padding:0 var(--gut) 2px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 var(--gut);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+html .app :global .mbar .months button{scroll-snap-align:center;flex:none;padding:7px 12px;font-size:12.5px;letter-spacing:.07em;border:0;transition:background-color .2s,color .2s,transform .12s}
+html .app :global .mbar .months button:hover{background:none;color:var(--muted)}
+html .app :global .mbar .months button:first-child{margin-left:auto}
+html .app :global .mbar .months button:last-child{margin-right:auto}
+html .app :global .mbar .months button:active{transform:scale(.94)}
+html .app :global .mbar .months button.is-now{color:var(--ink)}
+html .app :global .mbar .months button.is-now::after{content:"";position:absolute;left:50%;bottom:1px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--haldi)}
+html .app :global .mbar .months button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+html .app :global .mbar .months button::before{content:"";position:absolute;inset:-6px 0}
+
+/* ---------- tab bar ---------- */
+html .app :global .mtabs{display:grid;grid-template-columns:repeat(4,1fr);position:absolute;left:0;right:0;bottom:0;z-index:30;view-transition-name:mtabs;height:var(--tab-h);padding:0 max(4px,calc((100% - 560px) / 2)) var(--sb);
+  background:color-mix(in srgb,var(--paper) 80%,transparent);-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);border-top:1px solid var(--line)}
+html .app :global .mtab{--tc:var(--leaf);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:56px;min-width:0;padding:4px 0 0;border:0;background:none;color:var(--muted);cursor:pointer;transition:transform .12s cubic-bezier(.2,.8,.2,1),color .15s}
+html .app :global .mtab.t-ending{--tc:var(--terra)}
+html .app :global .mtab.t-next{--tc:var(--indigo)}
+html .app :global .mtab.t-around{--tc:color-mix(in srgb,var(--stone) 60%,var(--ink))}
+html .app :global .mtab:active{transform:scale(.92)}
+html .app :global .mtab[data-on]{color:var(--tc)}
+html .app :global .mic{position:relative;width:24px;height:24px}
+html .app :global .mic svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+html .app :global .mtab[data-on] .mic svg{stroke-width:2;fill:color-mix(in srgb,var(--tc) 14%,transparent)}
+html .app :global .badge{position:absolute;top:-6px;left:14px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--tc);color:var(--paper);font-size:11.5px;font-weight:700;line-height:19px;text-align:center;font-variant-numeric:tabular-nums;box-shadow:0 0 0 2px var(--paper)}
+html .app :global .mtab:not([data-on]) .badge{background:color-mix(in srgb,var(--tc) 72%,var(--muted))}
+html .app :global .mtab[data-on] .mlab{font-weight:700}
+html .app :global .mlab{font-size:11px;font-weight:600;letter-spacing:.01em;line-height:1.2;white-space:nowrap}
+
+/* ---------- home: large title + lists ---------- */
+html .app :global .wrap{max-width:none;padding:0 var(--gut) 16px}
+html .app :global .lede{padding:12px 0 20px}
+html .app :global .kicker{margin:0 0 8px;font-size:12px;letter-spacing:.12em}
+html .app :global .kicker::before{width:18px}
+html .app :global .lede h1{font-size:34px;font-weight:400;line-height:1.12;letter-spacing:-.025em;font-variation-settings:"opsz" 72}
+html .app :global .lede h1 span,html .app :global .lede h1 em{display:inline}
+html .app :global .lede h1 em{margin-left:.24em;font-weight:340}
+html .app :global .lede p.sub{margin:8px 0 0;font-size:15px;line-height:1.4}
+html .app :global .tabs{display:none}
+html .app[data-calm] :global #lists{animation:fade .15s ease both}
+:global(html[data-nav]) .app :global #lists{animation:none}
+html .app :global .intro{font-size:15px;line-height:1.4;margin:0 0 16px}
+html .app :global .empty{font-size:20px;margin:40px 0}
+html .app :global .group{margin:0 0 28px}
+html .app :global .group-head{margin:0 0 12px}
+html .app :global .group-head h2{font-size:20px}
+html .app :global .group-head span{font-size:12px}
+html .app :global .grid{grid-template-columns:1fr 1fr;gap:12px}
+html .app :global .card{border-radius:16px;content-visibility:auto;contain-intrinsic-size:auto calc((100vw - 44px) * .375 + 84px);transition:transform .08s ease-out;animation:rise .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--dm,0ms)}
+html .app[data-calm] :global .card{animation:none}
+html .app :global .card.st-away{contain-intrinsic-size:auto calc((100vw - 44px) * .375 + 125px)}
+html .app :global .card:hover{transform:none;box-shadow:none;border-color:var(--line)}
+html .app :global .card.st-last:hover{border-color:color-mix(in srgb,var(--terra) 65%,transparent)}
+html .app :global .card.st-away:hover{border-color:color-mix(in srgb,var(--stone) 70%,transparent)}
+html .app :global .card:hover .art svg{transform:none}
+html .app :global .card:active{transform:scale(.97)}
+html .app :global .chip{left:8px;top:8px;font-size:10px;padding:3px 8px 3px 6px;gap:5px}
+html .app :global .cb{padding:10px 12px 12px;gap:3px}
+html .app :global .nm{font-size:17px;line-height:1.2}
+html .app :global .hi{font-size:13px;line-height:1.35}
+html .app :global .hi [lang="hi"]{font-size:15px}
+html .app :global .from{font-size:13px}
+html .app :global .card .yr{opacity:1;transform:none;padding-top:10px}
+
+/* ---------- item screen: native detail view ---------- */
+html .app :global .back{display:none}
+html .app :global .rlay{grid-template-columns:1fr;gap:24px;margin-top:0}
+html .app :global .rside{position:static}
+html .app :global .rhero{aspect-ratio:16/10;margin:0 calc(-1 * var(--gut));border:0;border-radius:0;animation:none}
+html .app :global .rhero svg{width:42%;height:auto;max-height:74%}
+html .app :global .rtitle{margin:18px 0 4px;font-size:34px;font-weight:400;line-height:1.1;letter-spacing:-.025em;font-variation-settings:"opsz" 72}
+html .app :global .rhi .hi{font-size:15px}
+html .app :global .rhi .hi [lang="hi"]{font-size:18px}
+html .app :global .rline{margin:14px 0 0;font-size:15px;line-height:1.4}
+html .app :global .ycard{margin-top:16px;padding:14px 14px 13px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+html .app :global .ycard .ybig{margin-top:0}
+html .app :global .ybig i{height:30px;border-radius:7px;font-size:10.5px}
+html .app :global .ybig i.sel{box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--ink)}
+html .app :global .ycard .ycap{margin:14px 0 0;font-size:13px}
+html .app :global .rsec{margin:0 0 24px}
+html .app :global .rsec-head{display:flex;align-items:baseline;gap:0;padding:0 4px 8px;border:0}
+html .app :global .rsec-head h2{font-family:var(--ui);font-style:normal;font-weight:600;font-size:13px;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+html .app :global .rsec-head span{margin:0;font-size:13px;line-height:1.3;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+html .app :global .rsec-head span:not(:empty)::before{content:"·";margin:0 .45em}
+html .app :global .rlist{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+html .app :global a.rrow{position:relative;min-height:56px;gap:12px;padding:12px 14px 12px 16px;border:0;-webkit-user-select:none;user-select:none;transition:background-color .12s}
+html .app :global a.rrow:not(:last-child)::after{content:"";position:absolute;left:16px;right:0;bottom:0;height:1px;background:var(--line)}
+html .app :global a.rrow:hover{padding-left:16px;background:none}
+html .app :global a.rrow:active{background:color-mix(in srgb,var(--ink) 7%,transparent)}
+html .app :global .rn{font-size:17px;line-height:1.25}
+html .app :global .rd{font-size:14px;line-height:1.35}
+html .app :global .ra{width:30px;height:30px;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink)}
+html .app :global a.rrow:hover .ra{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink);transform:none}
+html .app :global a.rrow:active .ra{background:var(--haldi);color:#1D1A15}
+html .app :global .rempty{margin:0;padding:14px 16px;font-size:14.5px;line-height:1.4;border-radius:14px;border-left:0;background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+html .app :global .rnote{margin:4px 4px 0;font-size:13px}
+}
+
+/* wider phones / portrait tablets: three columns, wider gutters */
+@media (min-width:600px) and (max-width:900px){
+html .app{--gut:24px}
+html .app :global .grid{grid-template-columns:repeat(3,1fr);gap:14px}
+html .app :global .card{contain-intrinsic-size:auto calc((100vw - 76px) * .25 + 84px)}
+html .app :global .card.st-away{contain-intrinsic-size:auto calc((100vw - 76px) * .25 + 125px)}
+html .app :global .rlay{max-width:640px;margin-left:auto;margin-right:auto}
+html .app :global .rhero{margin:0;border-radius:20px;margin-top:8px}
+}
+
+/* ---------- desktop: none of the phone chrome ---------- */
+@media (min-width:901px){
+html .app :global .mbar,html .app :global .mtabs,html .app :global .a2hs{display:none}
+}
+
+@keyframes inRight{from{transform:translateX(100%)}}
+@keyframes inLeft{from{transform:translateX(-24%);opacity:.5}}

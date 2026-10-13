@@ -38,6 +38,7 @@ function Layout({
         <aside className="rside">
           <Art it={it} className="rhero" />
           <h1 className="rtitle">{it.n}</h1>
+          <span className="lt-end" aria-hidden="true" />
           <p className="rhi">
             <NameBits it={it} />
           </p>
@@ -77,7 +78,11 @@ export default function RecipeView({ slug }: { slug: string }) {
   const it = bySlug(slug);
   const backRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
-    if (takeUserOpen()) backRef.current?.focus({ preventScroll: true });
+    if (!takeUserOpen()) return;
+    /* phones hide this link and show the back chevron in the top bar instead */
+    const desk = backRef.current?.offsetParent ? backRef.current : null;
+    if (desk) desk.focus({ preventScroll: true });
+    else document.querySelector<HTMLElement>(".mback")?.focus({ preventScroll: true, focusVisible: false } as FocusOptions);
   }, [slug]);
   if (!it) return null;
 
@@ -110,14 +115,16 @@ export default function RecipeView({ slug }: { slug: string }) {
             <StatusGlyph k={ST[kind][1]} />
             <span>{line[kind]}</span>
           </p>
-          <div className={"st-" + kind}>
-            <SeasonStrip it={it} zone={zone} month={month} now={nowMonth()} big />
+          <div className="ycard">
+            <div className={"st-" + kind}>
+              <SeasonStrip it={it} zone={zone} month={month} now={nowMonth()} big />
+            </div>
+            <p className="ycap">
+              {s.local
+                ? "Season in " + ZONES[zone] + ": " + rangeText(s.r) + ". Dark box: the month you picked."
+                : "Not grown in " + ZONES[zone] + ". Filled months show the season where it is grown."}
+            </p>
           </div>
-          <p className="ycap">
-            {s.local
-              ? "Season in " + ZONES[zone] + ": " + rangeText(s.r) + ". Dark box: the month you picked."
-              : "Not grown in " + ZONES[zone] + ". Filled months show the season where it is grown."}
-          </p>
         </>
       }
     />

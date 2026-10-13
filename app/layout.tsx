@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import SwRegister from "@/components/SwRegister";
 import { fraunces, hanken, tiro } from "./fonts";
 import "./globals.css";
 
@@ -9,6 +10,11 @@ export const metadata: Metadata = {
   title: { default: "Mandi Calendar", template: "%s · Mandi Calendar" },
   description: "What is growing near you, month by month, for every state in India.",
   applicationName: "Mandi Calendar",
+  appleWebApp: { capable: true, statusBarStyle: "default", title: "Mandi" },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml", sizes: "any" }],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: { type: "website", siteName: "Mandi Calendar", locale: "en_IN" },
   twitter: { card: "summary_large_image" },
 };
@@ -34,7 +40,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SwRegister />
+      </body>
     </html>
   );
 }

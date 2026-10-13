@@ -53,4 +53,11 @@ export const store = {
       /* private mode: ignore */
     }
   },
+  del(k: string) {
+    try {
+      window.localStorage.removeItem(k);
+    } catch {
+      /* private mode: ignore */
+    }
+  },
 };

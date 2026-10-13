@@ -1,6 +1,7 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import { THEME_KEY, store } from "@/lib/appState";
+import { postTheme } from "@/lib/embed";
 
 export type Theme = "light" | "dark";
 
@@ -62,5 +63,49 @@ export default function ThemeToggle({
         <path d="M14.8 11.2A6.5 6.5 0 0 1 6.8 3.2a6.5 6.5 0 1 0 8 8z" />
       </svg>
     </button>
+  );
+}
+
+/* ---------- phone: "Appearance: Light · Dark · Auto" in the help sheet ---------- */
+export type ThemeChoice = Theme | "auto";
+
+function currentChoice(): ThemeChoice {
+  const t = document.documentElement.dataset.theme;
+  return t === "light" || t === "dark" ? t : "auto";
+}
+/** What the user picked: a fixed theme, or Auto (follow the phone). */
+export function useThemeChoice(): ThemeChoice {
+  return useSyncExternalStore(subscribe, currentChoice, () => "auto");
+}
+
+const CHOICES: ReadonlyArray<readonly [ThemeChoice, string]> = [
+  ["light", "Light"],
+  ["dark", "Dark"],
+  ["auto", "Auto"],
+];
+
+/** Segmented control. Inside the showcase frames the page owns the theme, so there is no Auto and the pick is reported. */
+export function Appearance({ embed }: { embed: boolean }) {
+  const choice = useThemeChoice();
+  const pick = (c: ThemeChoice) => {
+    if (c === "auto") {
+      delete document.documentElement.dataset.theme;
+      store.del(THEME_KEY);
+      return;
+    }
+    setTheme(c, embed ? null : THEME_KEY);
+    if (embed) postTheme(c);
+  };
+  return (
+    <div className="appear">
+      <span id="appearLabel">Appearance</span>
+      <div className="seg" role="radiogroup" aria-labelledby="appearLabel">
+        {CHOICES.filter(([c]) => !embed || c !== "auto").map(([c, label]) => (
+          <button key={c} type="button" role="radio" aria-checked={choice === c} onClick={() => choice !== c && pick(c)}>
+            {label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }

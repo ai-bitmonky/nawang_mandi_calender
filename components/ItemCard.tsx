@@ -40,7 +40,8 @@ export default function ItemCard({
       href={href}
       replace={replace}
       className={"card st-" + st}
-      style={{ "--d": Math.min(i, 16) * 40 + "ms" } as CSSProperties}
+      style={{ "--d": Math.min(i, 16) * 40 + "ms", "--dm": i < 12 ? i * 30 + "ms" : "0ms" } as CSSProperties}
+      data-nav="push"
       onClick={onOpen}
     >
       <Art it={it} as="span" />

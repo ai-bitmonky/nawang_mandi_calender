@@ -128,59 +128,7 @@
 .root :global .lrow b{display:block;font-family:var(--display);font-weight:600;font-size:17px}
 .root :global .lrow span{font-size:14px;color:var(--muted)}
 .root :global .foot-note{margin:14px 0 0;font-size:13px;color:var(--muted)}
-/* ---------- mobile layout: phones and portrait tablets (<=900px) ---------- */
-@media (max-width:900px){
-.root :global .bar-in{grid-template-columns:auto minmax(0,1fr) auto;padding:10px 16px 8px;gap:10px}
-.root :global .sel select{text-overflow:ellipsis}
-.root :global .mark{font-size:17px;gap:8px}
-.root :global .sel select{min-width:0;font-size:14px;padding:8px 30px 8px 13px;min-height:44px}
-.root :global .info,.root :global .close{width:44px;height:44px}
-.root :global .info svg{width:18px;height:18px}
-.root :global .mark{min-height:44px}
-.root :global .months{order:5;grid-column:1/-1;justify-content:flex-start;margin:0 -16px;padding:0 16px 2px;scroll-padding:0 16px}
-.root :global .months{padding-top:6px;padding-bottom:6px}
-.root :global .months button{padding:7px 11px;font-size:11.5px}
-.root :global .months button::before{content:"";position:absolute;inset:-6px 0}
-.root :global .wrap{padding:0 16px calc(98px + env(safe-area-inset-bottom,0px))}
-.root :global .lede{padding:24px 0 18px}
-.root :global .kicker{margin-bottom:10px;font-size:10.5px}
-.root :global .lede h1{font-size:44px}
-.root :global .lede p.sub{margin-top:10px;font-size:14px}
-.root :global .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:0;padding:6px 8px calc(16px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--paper) 90%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);border-bottom:0}
-.root :global .tabs button{position:relative;display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;column-gap:5px;row-gap:3px;margin:0;padding:9px 2px 7px;border:0;border-radius:12px;font-size:11px;font-weight:600;letter-spacing:.01em}
-.root :global .tabs button b{order:0;font-size:20px}
-.root :global .tabs button .tl{grid-column:1/-1;order:2;text-align:center;white-space:nowrap}
-.root :global .tabs button[aria-selected="true"]{background:color-mix(in srgb,var(--tc) 9%,transparent)}
-.root :global .tabs button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:32%;right:32%;height:2px;border-radius:2px;background:var(--tc)}
-.root :global .intro{font-size:14px;margin-bottom:14px}
-.root :global .group{margin-bottom:26px}
-.root :global .group-head h2{font-size:21px}
-.root :global .grid{grid-template-columns:1fr 1fr;gap:10px}
-.root :global .card{border-radius:14px}
-.root :global .chip{left:8px;top:8px;font-size:9.5px;padding:3px 8px 3px 6px;gap:5px}
-.root :global .cb{padding:10px 11px 12px}
-.root :global .nm{font-size:16px}
-.root :global .hi{font-size:12px}
-.root :global .hi [lang="hi"]{font-size:14px}
-.root :global .from{font-size:12px}
-.root :global .card .yr{opacity:1;transform:none;padding-top:9px}
-.root :global .back{margin-top:18px;min-height:44px}
-.root :global .rlay{grid-template-columns:1fr;gap:22px;margin-top:18px}
-.root :global .rside{position:static}
-.root :global .rhero{aspect-ratio:16/10;border-radius:20px}
-.root :global .rhero svg{width:44%;height:auto;max-height:70%}
-.root :global .rtitle{font-size:44px;margin-top:18px}
-.root :global .ybig i{height:26px;font-size:10px}
-.root :global .rsec-head h2{font-size:21px}
-.root :global .rn{font-size:16.5px}
-}
-/* wider mobiles / portrait tablets: three columns */
-@media (min-width:600px) and (max-width:900px){
-.root :global .grid{grid-template-columns:repeat(3,1fr);gap:12px}
-.root :global .wrap{padding-left:24px;padding-right:24px}
-.root :global .bar-in{padding-left:24px;padding-right:24px}
-.root :global .months{margin:0 -24px;padding-left:24px;padding-right:24px}
-}
+/* phones and portrait tablets (<=900px): see Mobile.module.css */
 /* touch screens with the desktop layout: keep the 12-month strip visible */
 @media (hover:none) and (min-width:901px){
 .root :global .card .yr{opacity:1;transform:none;padding-top:9px}
